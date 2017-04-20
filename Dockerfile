@@ -66,7 +66,7 @@ RUN make install
 WORKDIR /app/.heroku
 RUN rm -rf Python-2.7.10
 ENV PATH /app/.heroku/vendor/bin:$PATH
-ENV PYTHONPATH /app/.heroku/vendor/lib/python2.7/site-packages
+ENV PYTHONPATH /app/:/app/.heroku/vendor/lib/python2.7/site-packages
 
 
 # Install latest setup-tools and pip
