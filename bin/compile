@@ -22,7 +22,17 @@ fi
 deep-cp() {
   declare source="$1" target="$2"
   echo "Source ${source}"
+  for entry in "$source"/*
+do
+  echo "$entry"
+done
+
   echo "Target ${target}"
+  for entry in "$target"/*
+do
+  echo "$entry"
+done
+
   mkdir -p "$target"
 
   # cp doesn't like being called without source params,
