@@ -21,7 +21,8 @@ fi
 # Does some serious copying.
 deep-cp() {
   declare source="$1" target="$2"
-
+  echo source 
+  echo target
   mkdir -p "$target"
 
   # cp doesn't like being called without source params,
