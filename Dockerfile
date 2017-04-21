@@ -3,9 +3,10 @@ FROM heroku/cedar:14
 
 
 # Make folder structure
-RUN mkdir /app
-RUN mkdir /app/.heroku
-RUN mkdir /app/.heroku/vendor
+# Commenting the lines as the structure exists already
+#RUN mkdir /app
+#RUN mkdir /app/.heroku
+#RUN mkdir /app/.heroku/vendor
 ENV LD_LIBRARY_PATH /app/.heroku/vendor/lib/
 
 
