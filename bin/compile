@@ -66,7 +66,7 @@ export LAPACK="$BUILD_DIR/.heroku/vendor/lib/liblapack.a"
 export LD_LIBRARY_PATH="$BUILD_DIR/.heroku/vendor/lib"
 export PATH="$BUILD_DIR/.heroku/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 #export PYTHONPATH="$BUILD_DIR/.heroku/vendor/lib/python2.7/site-packages/"
-export PYTHONPATH="$BUILD_DIR/:$BUILD_DIR/.heroku/python/lib/python2.7/"
+export PYTHONPATH="$BUILD_DIR/.heroku/python/:$BUILD_DIR/.heroku/python/lib/python2.7/"
 #export ENV PYTHONPATH /app/.heroku/python/lib/python2.7
 
 # Setup environment
@@ -95,7 +95,7 @@ export BLAS="\$HOME/.heroku/vendor/lib/libcblas.a"
 export LAPACK="\$HOME/.heroku/vendor/lib/liblapack.a"
 export LD_LIBRARY_PATH="\$HOME/.heroku/vendor/lib:\$LD_LIBRARY_PATH"
 export PATH="\$HOME/.heroku/vendor/bin:\$PATH"
-export PYTHONPATH="\$HOME/:\$HOME/.heroku/python/lib/python2.7/"
+export PYTHONPATH="\$HOME/.heroku/python/:\$HOME/.heroku/python/lib/python2.7/"
 EOF
 
 deep-mv $BUILD_DIR $ORIG_BUILD_DIR
