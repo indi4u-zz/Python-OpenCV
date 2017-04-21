@@ -28,7 +28,7 @@ do
 done
 
   echo "Target ${target}"
-  for entry in "$target"/*
+  for entry in "$target" /*
 do
   echo "$entry"
 done
