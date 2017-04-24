@@ -16,8 +16,8 @@ echo "Creating environment variables."
 mkdir -p $1/.profile.d
 cd $1/.profile.d
 cat <<EOF > Python-OpenCV.sh
-export PATH ="/app/vendor/opencv:\$PATH"
-export PYTHONPATH ="/app/:/app/vendor/opencv/opencv-3.2.0"
+export PATH="/app/vendor/opencv:\$PATH"
+export PYTHONPATH="/app/:/app/vendor/opencv/opencv-3.2.0"
 EOF
 
 echo "Done <-----"
