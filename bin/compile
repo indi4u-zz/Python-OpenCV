@@ -6,7 +6,7 @@ cd $1
 
 curl -O -s https://github.com/indi4u/opencv/blob/master/opencv-3.2.0.tar.gz
 mkdir -p vendor/opencv
-tar -C vendor/opencv -xvf opencv-3.2.0.tar.gz
+tar -C vendor/opencv -xzf opencv-3.2.0.tar.gz
 rm opencv-3.2.0.tar.gz
 #WORKDIR /app/.heroku
 #RUN rm -rf opencv-2.4.11
