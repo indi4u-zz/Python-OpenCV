@@ -16,7 +16,7 @@ echo "Creating environment variables."
 mkdir -p $1/.profile.d
 cat <<EOF >$1/.profile.d/heroku-buildpack-portaudio-defaults.sh
 PATH=/app/vendor/opencv:\$PATH
-PYTHONPATH =/app/:/app/vendor/opencv
+export PYTHONPATH =/app/:/app/vendor/opencv
 EOF
 
 echo "Done <-----"
