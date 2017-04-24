@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 echo "Installing OpenCV"
 # Install Opencv with python bindings
@@ -15,9 +15,9 @@ rm opencv-3.2.0.tar.gz
 echo "Creating environment variables."
 mkdir -p $1/.profile.d
 cd $1/.profile.d
-cat <<EOF> Python-OpenCV.sh
-PATH =/app/vendor/opencv:\$PATH
-export PYTHONPATH =/app/:/app/vendor/opencv/opencv-3.2.0
+cat <<EOF > Python-OpenCV.sh
+export PATH ="/app/vendor/opencv:\$PATH"
+export PYTHONPATH ="/app/:/app/vendor/opencv/opencv-3.2.0"
 EOF
 
 echo "Done <-----"
