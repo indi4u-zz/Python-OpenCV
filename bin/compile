@@ -2,7 +2,7 @@
 
 echo "Installing OpenCV"
 # Install Opencv with python bindings
-cd /app/
+cd $1
 
 curl -O -s https://raw.githubusercontent.com/indi4u/opencv/master/opencv-3.2.0.tar.gz
 mkdir -p vendor/opencv
