@@ -2,26 +2,28 @@
 
 echo "Installing OpenCV"
 # Install Opencv with python bindings
-RUN apt-get install -y cmake
-RUN curl -s -L https://github.com/Itseez/opencv/archive/2.4.11.zip > opencv-2.4.11.zip
-RUN unzip opencv-2.4.11.zip
-RUN rm opencv-2.4.11.zip
-WORKDIR /app/.heroku/opencv-2.4.11
-RUN cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/app/.heroku/vendor -D BUILD_DOCS=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_opencv_python=ON .
-RUN make install
-WORKDIR /app/.heroku
-RUN rm -rf opencv-2.4.11
+cd $1
+apt-get install -y cmake
+curl -s -L https://github.com/Itseez/opencv/archive/2.4.11.zip > opencv-2.4.11.zip
+mkdir -p vendor/opencv
+unzip opencv-2.4.11.zip -d vendor/opencv
+rm opencv-2.4.11.zip
+WORKDIR vendor/opencv/opencv-2.4.11
+cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/app/.heroku/vendor -D BUILD_DOCS=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_opencv_python=ON .
+make install
+#WORKDIR /app/.heroku
+#RUN rm -rf opencv-2.4.11
 
 # creating env variables
 title "Creating environment variables."
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/5251124.sh
-export ATLAS="\$HOME/.heroku/vendor/lib/libatlas.a"
-export BLAS="\$HOME/.heroku/vendor/lib/libcblas.a"
-export LAPACK="\$HOME/.heroku/vendor/lib/liblapack.a"
-export LD_LIBRARY_PATH="\$HOME/.heroku/vendor/lib:\$LD_LIBRARY_PATH"
-export PATH="\$HOME/.heroku/vendor/bin:\$PATH"
-export PYTHONPATH="\$HOME/.heroku/python/:\$HOME/.heroku/python/lib/python2.7/"
+#export ATLAS="\$HOME/.heroku/vendor/lib/libatlas.a"
+#export BLAS="\$HOME/.heroku/vendor/lib/libcblas.a"
+#export LAPACK="\$HOME/.heroku/vendor/lib/liblapack.a"
+#export LD_LIBRARY_PATH="\$HOME/.heroku/vendor/lib:\$LD_LIBRARY_PATH"
+#export PATH="\$HOME/.heroku/vendor/bin:\$PATH"
+#export PYTHONPATH="\$HOME/.heroku/python/:\$HOME/.heroku/python/lib/python2.7/"
 EOF
 
 echo "Done <-----"
