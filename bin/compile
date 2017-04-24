@@ -3,14 +3,11 @@
 echo "Installing OpenCV"
 # Install Opencv with python bindings
 cd $1
-apt-get install -y cmake
-curl -s -L https://github.com/Itseez/opencv/archive/2.4.11.zip > opencv-2.4.11.zip
+
+curl -0 -s curl -O -s https://github.com/indi4u/opencv/blob/master/opencv-3.2.0.tar.gz
 mkdir -p vendor/opencv
-unzip opencv-2.4.11.zip -d vendor/opencv
-rm opencv-2.4.11.zip
-WORKDIR vendor/opencv/opencv-2.4.11
-cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/app/.heroku/vendor -D BUILD_DOCS=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_opencv_python=ON .
-make install
+tar -C vendor/opencv -xvf opencv-3.2.0.tar.gz
+rm opencv-3.2.0.tar.gz
 #WORKDIR /app/.heroku
 #RUN rm -rf opencv-2.4.11
 
