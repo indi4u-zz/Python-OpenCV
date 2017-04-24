@@ -1,101 +1,16 @@
 #!/usr/bin/env bash
 
-title() {
-  echo "-----> $*"
-}
-
-subtitle() {
-  echo "       $*"
-}
-
-# Taken from python heroku buildpack
-###################################
-shopt -s extglob
-
-if [ $(uname) == Darwin ]; then
-    sed() { command sed -l "$@"; }
-else
-    sed() { command sed -u "$@"; }
-fi
-
-# Does some serious copying.
-deep-cp() {
-  declare source="$1" target="$2"
-  echo "Source ${source}"
-  for entry in "$source"/*
-do
-  echo "$entry"
-done
-
-  echo "Target ${target}"
-  for entry in "$target" /*
-do
-  echo "$entry"
-done
-
-  mkdir -p "$target"
-
-  # cp doesn't like being called without source params,
-  # so make sure they expand to something first.
-  # subshell to avoid surprising caller with shopts.
-  (
-    shopt -s nullglob dotglob
-    set -- "$source"/!(tmp|.|..)
-    [[ $# == 0 ]] || cp -a "$@" "$target"
-  )
-}
-
-# Does some serious moving.
-deep-mv() {
-  deep-cp "$1" "$2"
-  deep-rm "$1"
-}
-
-# Does some serious deleting.
-deep-rm() {
-  # subshell to avoid surprising caller with shopts.
-  (
-    shopt -s dotglob
-    rm -rf "$1"/!(tmp|.|..)
-  )
-}
-###################################
-
-BUILD_DIR=$1
-CACHE_DIR=$2
-
-APP_DIR="/app"
-deep-mv $BUILD_DIR $APP_DIR
-ORIG_BUILD_DIR=$BUILD_DIR
-BUILD_DIR=$APP_DIR
-cd $BUILD_DIR
-
-unset ATLAS BLAS LAPACK LD_LIBRARY_PATH PATH PYTHONPATH
-export ATLAS="$BUILD_DIR/.heroku/vendor/lib/libatlas.a"
-export BLAS="$BUILD_DIR/.heroku/vendor/lib/libcblas.a"
-export LAPACK="$BUILD_DIR/.heroku/vendor/lib/liblapack.a"
-export LD_LIBRARY_PATH="$BUILD_DIR/.heroku/vendor/lib"
-export PATH="$BUILD_DIR/.heroku/vendor/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-#export PYTHONPATH="$BUILD_DIR/.heroku/vendor/lib/python2.7/site-packages/"
-export PYTHONPATH="$BUILD_DIR/.heroku/python/:$BUILD_DIR/.heroku/python/lib/python2.7/"
-#export ENV PYTHONPATH /app/.heroku/python/lib/python2.7
-
-# Setup environment
-mkdir -p $CACHE_DIR
-title "Generating environment"
-if [ ! -f $CACHE_DIR/vendor.tar.bz2 ]; then
-	subtitle "Fetching..."
-	curl -s -L "https://dl.dropboxusercontent.com/u/17040412/vendor.tar.bz2" > $CACHE_DIR/vendor.tar.bz2
-fi
-subtitle "Unpacking..."
-tar -xvf $CACHE_DIR/vendor.tar.bz2 -C $BUILD_DIR
-
-
-# installing application dependencies
-if [ -f $BUILD_DIR/requirements.txt ]; then
-	title "Found requirements.txt, installing dependencies using pip"
-	$BUILD_DIR/.heroku/vendor/bin/pip install -r requirements.txt --exists-action=w --src=./.heroku/src --allow-all-external
-fi
+echo "Installing OpenCV"
+# Install Opencv with python bindings
+RUN apt-get install -y cmake
+RUN curl -s -L https://github.com/Itseez/opencv/archive/2.4.11.zip > opencv-2.4.11.zip
+RUN unzip opencv-2.4.11.zip
+RUN rm opencv-2.4.11.zip
+WORKDIR /app/.heroku/opencv-2.4.11
+RUN cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_PREFIX=/app/.heroku/vendor -D BUILD_DOCS=OFF -D BUILD_TESTS=OFF -D BUILD_PERF_TESTS=OFF -D BUILD_EXAMPLES=OFF -D BUILD_opencv_python=ON .
+RUN make install
+WORKDIR /app/.heroku
+RUN rm -rf opencv-2.4.11
 
 # creating env variables
 title "Creating environment variables."
@@ -109,6 +24,7 @@ export PATH="\$HOME/.heroku/vendor/bin:\$PATH"
 export PYTHONPATH="\$HOME/.heroku/python/:\$HOME/.heroku/python/lib/python2.7/"
 EOF
 
-deep-mv $BUILD_DIR $ORIG_BUILD_DIR
+echo "Done <-----"
+exit 0
 
 title "Buildpack installed."
