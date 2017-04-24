@@ -14,8 +14,8 @@ rm opencv-3.2.0.tar.gz
 # creating env variables
 echo "Creating environment variables."
 mkdir -p $1/.profile.d
-
-cat <<EOF >$1/.profile.d/Python-OpenCV.sh
+cd $1/.profile.d
+cat <<EOF> Python-OpenCV.sh
 PATH =/app/vendor/opencv:\$PATH
 export PYTHONPATH =/app/:/app/vendor/opencv/opencv-3.2.0
 EOF
