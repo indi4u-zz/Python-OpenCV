@@ -13,14 +13,9 @@ rm opencv-3.2.0.tar.gz
 
 # creating env variables
 echo "Creating environment variables."
-mkdir -p $BUILD_DIR/.profile.d
-cat <<EOF >$BUILD_DIR/.profile.d/5251124.sh
-#export ATLAS="\$HOME/.heroku/vendor/lib/libatlas.a"
-#export BLAS="\$HOME/.heroku/vendor/lib/libcblas.a"
-#export LAPACK="\$HOME/.heroku/vendor/lib/liblapack.a"
-#export LD_LIBRARY_PATH="\$HOME/.heroku/vendor/lib:\$LD_LIBRARY_PATH"
-#export PATH="\$HOME/.heroku/vendor/bin:\$PATH"
-#export PYTHONPATH="\$HOME/.heroku/python/:\$HOME/.heroku/python/lib/python2.7/"
+mkdir -p $1/.profile.d
+cat <<EOF >$1/.profile.d/heroku-buildpack-portaudio-defaults.sh
+PATH=/app/vendor/opencv:\$PATH
 EOF
 
 echo "Done <-----"
