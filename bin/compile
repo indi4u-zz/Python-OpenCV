@@ -4,7 +4,7 @@ echo "Installing OpenCV"
 # Install Opencv with python bindings
 cd $1
 
-curl -0 -s curl -O -s https://github.com/indi4u/opencv/blob/master/opencv-3.2.0.tar.gz
+curl -O -s https://github.com/indi4u/opencv/blob/master/opencv-3.2.0.tar.gz
 mkdir -p vendor/opencv
 tar -C vendor/opencv -xvf opencv-3.2.0.tar.gz
 rm opencv-3.2.0.tar.gz
