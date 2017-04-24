@@ -4,7 +4,7 @@ echo "Installing OpenCV"
 # Install Opencv with python bindings
 cd $1
 
-curl -O -s https://github.com/indi4u/opencv/blob/master/opencv-3.2.0.tar.gz
+curl -O -s https://raw.githubusercontent.com/indi4u/opencv/master/opencv-3.2.0.tar.gz
 mkdir -p vendor/opencv
 tar -C vendor/opencv -xzf opencv-3.2.0.tar.gz
 rm opencv-3.2.0.tar.gz
@@ -12,7 +12,7 @@ rm opencv-3.2.0.tar.gz
 #RUN rm -rf opencv-2.4.11
 
 # creating env variables
-title "Creating environment variables."
+echo "Creating environment variables."
 mkdir -p $BUILD_DIR/.profile.d
 cat <<EOF >$BUILD_DIR/.profile.d/5251124.sh
 #export ATLAS="\$HOME/.heroku/vendor/lib/libatlas.a"
@@ -26,4 +26,4 @@ EOF
 echo "Done <-----"
 exit 0
 
-title "Buildpack installed."
+echo "Buildpack installed."
