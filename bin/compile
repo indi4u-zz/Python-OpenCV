@@ -15,7 +15,7 @@ rm opencv-3.2.0.tar.gz
 echo "Creating environment variables."
 mkdir -p $1/.profile.d
 PATH=/app/vendor/opencv:\$PATH
-export "PYTHONPATH =/app/:/app/vendor/opencv"
+export PYTHONPATH =/app/:/app/vendor/opencv/opencv-3.2.0
 EOF
 
 echo "Done <-----"
